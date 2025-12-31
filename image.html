@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Cloudinary Browser</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto;
+  background: #f5f7fb;
+}
+
+header {
+  background: #fff;
+  padding: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.search {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.main {
+  display: flex;
+  height: calc(100vh - 64px);
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 240px;
+  background: #fff;
+  border-right: 1px solid #eee;
+  overflow-y: auto;
+}
+
+.folder {
+  padding: 12px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 14px;
+}
+
+.folder:hover {
+  background: #f0f6ff;
+}
+
+.folder.active {
+  background: #0a7cff;
+  color: #fff;
+}
+
+/* ===== CONTENT ===== */
+.content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 14px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+  cursor: pointer;
+  transition: transform .2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.card img {
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.card small {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  color: #555;
+  word-break: break-all;
+}
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0a7cff;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+
+.home-btn {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+
+  background: #0a7cff;
+  color: #fff;
+  padding: 28px 26px;
+  border-radius: 50px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,.2);
+  user-select: none;
+  z-index: 999;
+  transition: transform .2s ease, background .2s ease;
+}
+
+.home-btn:hover {
+  background: #055fd1;
+  transform: translateY(-2px);
+}
+
+.home-btn:active {
+  transform: scale(.95);
+}
+</style>
+</head>
+
+<body>
+<div id="homeBtn" class="home-btn">🏠 Home</div>
+<header>
+  <input id="search" class="search" placeholder="Search folder or image…" />
+</header>
+
+<div class="main">
+  <div id="folders" class="sidebar"></div>
+  <div class="content">
+    <div id="images" class="grid"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast">Copied!</div>
+
+<script>
+const DATA_URL = "./assets/json/cloudinary.json";
+
+let DATA = [];
+let CURRENT_FOLDER = null;
+
+/* ===== INIT ===== */
+fetch(DATA_URL)
+  .then(r => r.json())
+  .then(json => {
+    DATA = json.folders || [];
+    renderFolders(DATA);
+  });
+
+/* ===== FOLDERS ===== */
+function renderFolders(list) {
+  const root = document.getElementById("folders");
+  root.innerHTML = "";
+
+  list.forEach(f => {
+    const div = document.createElement("div");
+    div.className = "folder";
+    div.textContent = f.folder;
+    div.onclick = () => selectFolder(f.folder);
+    root.appendChild(div);
+  });
+}
+
+function selectFolder(name) {
+  CURRENT_FOLDER = name;
+
+  document.querySelectorAll(".folder").forEach(f =>
+    f.classList.toggle("active", f.textContent === name)
+  );
+
+  const folder = DATA.find(f => f.folder === name);
+  renderImages(folder?.images || []);
+}
+
+/* ===== IMAGES ===== */
+function renderImages(images) {
+  const root = document.getElementById("images");
+  root.innerHTML = "";
+
+  images.forEach(img => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <img loading="lazy" src="${img.url}">
+      <small>${img.public_id}</small>
+    `;
+
+    card.onclick = () => copyText(img.url);
+    root.appendChild(card);
+  });
+}
+
+/* ===== COPY ===== */
+function copyText(text) {
+  navigator.clipboard.writeText(text);
+  showToast();
+}
+
+function showToast() {
+  const t = document.getElementById("toast");
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 1200);
+}
+
+/* ===== SEARCH ===== */
+document.getElementById("search").addEventListener("input", e => {
+  const q = e.target.value.toLowerCase();
+
+  if (!q) {
+    renderFolders(DATA);
+    if (CURRENT_FOLDER) selectFolder(CURRENT_FOLDER);
+    return;
+  }
+
+  const filtered = DATA
+    .map(f => ({
+      ...f,
+      images: f.images.filter(i =>
+        i.public_id.toLowerCase().includes(q)
+      )
+    }))
+    .filter(f =>
+      f.folder.toLowerCase().includes(q) || f.images.length
+    );
+
+  renderFolders(filtered);
+  renderImages(filtered[0]?.images || []);
+});
+</script>
+<script>
+    document.getElementById("homeBtn").addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

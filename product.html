@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Product Manager</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+
+  <div class="page">
+    <div class="card">
+
+      <div class="top-bar">
+        <div id="homeBtn" class="home-btn">🏠 Home</div>
+        <h2>Product Manager</h2>
+      </div>
+
+      <div class="actions">
+        <button id="loadpro" class="btn blue">Product Load</button>
+        <button id="addProductBtn" class="btn blue">+ Add Product</button>
+
+        <button id="logoutBtn" class="btn red">Logout</button>
+      </div>
+
+      <hr>
+
+      <div id="productsRoot"></div>
+    </div>
+  </div>
+
+  <script type="module" src="./assets/js/core/admin.js"></script>
+  <script type="module" src="./assets/js/pages/product.js"></script>
+  <script type="module" src="./assets/js/pages/productload.js"></script>
+</body>
+
+</html>

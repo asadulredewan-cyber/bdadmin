@@ -1,0 +1,241 @@
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px 0;
+}
+
+.card {
+  width: 100%;
+  max-width: 900px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px 30px 30px;
+}
+
+.product-box {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1e3c72;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-top: 14px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  margin-top: 18px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #1e3c72;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #16315c;
+}
+
+/* ===== DASHBOARD ===== */
+.dashboard {
+  display: none;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.dash-btn {
+  padding: 25px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  background: #f4f6fb;
+  border: 1px solid #e0e4f1;
+  cursor: pointer;
+}
+
+.dash-btn:hover {
+  background: #1e3c72;
+  color: #fff;
+}
+
+.logout {
+  grid-column: span 2;
+  background: #d32f2f;
+}
+
+.logout:hover {
+  background: #b71c1c;
+}
+
+.hidden {
+  display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+
+.home-btn {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+
+  background: #0a7cff;
+  color: #fff;
+  padding: 100px 16px;
+  border-radius: 50px;
+
+  font-size: 20px;
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,.2);
+  user-select: none;
+  z-index: 999;
+  transition: transform .2s ease, background .2s ease;
+}
+
+.home-btn:hover {
+  background: #055fd1;
+  transform: translateY(-2px);
+}
+
+.home-btn:active {
+  transform: scale(.95);
+}
+
+
+.top-bar h2 {
+  margin: 0 auto;
+  color: #123a7c;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.blue {
+  background: #1976d2;
+}
+
+.gray {
+  background: #607d8b;
+}
+
+.red {
+  background: #d32f2f;
+}
+
+.status {
+  font-size: 14px;
+}
+.form-actions {
+  justify-content: flex-start;
+}
+
+
+/* ===== Floating Placeholder Style ===== */
+.f-field {
+  position: relative;
+  margin: 14px 0;
+}
+
+.f-field input {
+  width: 100%;
+  padding: 14px 12px;
+  font-size: 16px;
+  border: 1px solid #fc9c9c;
+  border-radius: 6px;
+  outline: none;
+  background: #fff;
+}
+
+.f-field label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: #888;
+  background: #fff;
+  padding: 0 6px;
+  pointer-events: none;
+  transition: 0.25s ease;
+}
+
+/* focus বা value থাকলে উপরে উঠবে */
+.f-field input:focus + label,
+.f-field input:not(:placeholder-shown) + label {
+  top: -7px;
+  font-size: 15px;
+  color: #1e6bff;
+}
+
+/* focus border */
+.f-field input:focus {
+  border-color: #1e6bff;
+}
