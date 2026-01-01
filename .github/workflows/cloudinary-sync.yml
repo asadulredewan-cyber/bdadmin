@@ -2,8 +2,9 @@ name: Cloudinary → JSON Sync
 
 on:
   schedule:
-    cron: "0 */3 * * *" * * * *"   # ⏰ every 1 hour
+    - cron: "0 */2 * * *"   # every 1 hour
   workflow_dispatch:
+
 
 jobs:
   sync:
