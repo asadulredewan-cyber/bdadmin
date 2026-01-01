@@ -10,7 +10,7 @@ cloudinary.v2.config({
 const OUTPUT = "assets/json/cloudinary.json";
 
 async function getAllImages() {
-  let result = {};
+  const folderMap = {};
   let nextCursor = null;
 
   do {
@@ -22,14 +22,25 @@ async function getAllImages() {
 
     res.resources.forEach(img => {
       const folder = img.folder || "root";
-      if (!result[folder]) result[folder] = [];
-      result[folder].push(img.public_id.replace(folder + "/", ""));
+
+      if (!folderMap[folder]) {
+        folderMap[folder] = [];
+      }
+
+      folderMap[folder].push({
+        public_id: img.public_id.split("/").pop(),
+        url: img.secure_url
+      });
     });
 
     nextCursor = res.next_cursor;
   } while (nextCursor);
 
-  return result;
+  // 👉 object → array transform
+  return Object.keys(folderMap).map(folder => ({
+    folder,
+    images: folderMap[folder]
+  }));
 }
 
 (async () => {
@@ -38,7 +49,6 @@ async function getAllImages() {
   const folders = await getAllImages();
 
   const json = {
-    base: `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
     updatedAt: Date.now(),
     folders
   };
@@ -46,5 +56,5 @@ async function getAllImages() {
   fs.mkdirSync("assets/json", { recursive: true });
   fs.writeFileSync(OUTPUT, JSON.stringify(json, null, 2));
 
-  console.log("✅ cloudinary.json updated");
+  console.log("✅ cloudinary.json updated (UI compatible)");
 })();
