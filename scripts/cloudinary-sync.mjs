@@ -9,6 +9,16 @@ cloudinary.v2.config({
 
 const OUTPUT = "assets/json/cloudinary.json";
 
+// 🔑 normalize folder path
+function normalizeFolder(fullPath) {
+  if (!fullPath) return "root";
+
+  // remove leading "Home/"
+  return fullPath.startsWith("Home/")
+    ? fullPath.replace("Home/", "")
+    : fullPath;
+}
+
 async function getAllImages() {
   const folderMap = {};
   let nextCursor = null;
@@ -21,11 +31,10 @@ async function getAllImages() {
     });
 
     res.resources.forEach(img => {
-      const folder = img.folder || "root";
+      const rawFolder = img.folder || "root";
+      const folder = normalizeFolder(rawFolder);
 
-      if (!folderMap[folder]) {
-        folderMap[folder] = [];
-      }
+      if (!folderMap[folder]) folderMap[folder] = [];
 
       folderMap[folder].push({
         public_id: img.public_id.split("/").pop(),
@@ -36,7 +45,6 @@ async function getAllImages() {
     nextCursor = res.next_cursor;
   } while (nextCursor);
 
-  // 👉 object → array transform
   return Object.keys(folderMap).map(folder => ({
     folder,
     images: folderMap[folder]
@@ -56,5 +64,5 @@ async function getAllImages() {
   fs.mkdirSync("assets/json", { recursive: true });
   fs.writeFileSync(OUTPUT, JSON.stringify(json, null, 2));
 
-  console.log("✅ cloudinary.json updated (UI compatible)");
+  console.log("✅ cloudinary.json updated (folder paths fixed)");
 })();
