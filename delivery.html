@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Admin – Delivery / Orders</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto;
+      background: #f5f7fb;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+      padding: 20px;
+      max-width: 420px;
+      margin: 40px auto;
+    }
+
+    h2 {
+      margin: 0 0 10px
+    }
+
+    input,
+    button,
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 14px;
+    }
+
+    button {
+      background: #0a7cff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: #e53935
+    }
+
+    button:disabled {
+      opacity: .6
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .table-wrap {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+      margin-top: 16px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background: #f1f1f1
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .home-btn {
+      position: fixed;
+      bottom: 16px;
+      left: 16px;
+
+      background: #0a7cff;
+      color: #fff;
+      padding: 30px 26px;
+      border-radius: 50px;
+
+      font-size: 14px;
+      font-weight: 500;
+
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .2);
+      user-select: none;
+      z-index: 999;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .home-btn:hover {
+      background: #055fd1;
+      transform: translateY(-2px);
+    }
+
+    .home-btn:active {
+      transform: scale(.95);
+    }
+
+    .badge {
+      padding: 4px 8px;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 12px;
+      text-transform: capitalize;
+    }
+
+    .pending {
+      background: #ff9800
+    }
+
+    .confirm {
+      background: #2196f3
+    }
+
+    .ready {
+      background: #9c27b0
+    }
+
+    .shipped {
+      background: #009688
+    }
+
+    .delivered {
+      background: #4caf50
+    }
+
+    .cancelled {
+      background: #f44336
+    }
+
+    .action {
+      display: flex;
+      gap: 8px;
+    }
+
+    .small {
+      font-size: 12px;
+      color: #666
+    }
+
+
+    /* ================= MOBILE: ITEM MAX 3 LINES ================= */
+
+
+    @media (max-width: 768px) {
+  th:nth-child(3),
+  td:nth-child(3) {
+    display: none;
+  }
+}
+
+    @media (max-width: 768px) {
+
+
+      /* Action column fix */
+      th:nth-child(8),
+      td:nth-child(8) {
+        min-width: 160px;
+        white-space: normal;
+      }
+
+      td:nth-child(8) select {
+        width: 100%;
+        white-space: nowrap;
+      }
+
+      .action {
+        flex-direction: column;
+        gap: 6px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div id="orderModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5);">
+  <div style="background:#fff; width:90%; max-width:500px; margin:50px auto; padding:20px; border-radius:12px; position:relative; max-height:80vh; overflow-y:auto;">
+    <span id="closeModal" style="position:absolute; right:15px; top:10px; font-size:24px; cursor:pointer;">&times;</span>
+    <h3>Order Details</h3>
+    <hr>
+    <div id="modalContent"></div>
+  </div>
+</div>
+  <!-- LOGIN -->
+  <div id="loginBox" class="card">
+    <h2>Admin Login</h2>
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+    <button id="loginBtn">Login</button>
+    <p id="loginMsg" class="small" style="color:#e53935"></p>
+  </div>
+
+
+  <!-- ADMIN -->
+  <div id="adminBox" style="display:none">
+    <div id="homeBtn" class="home-btn">🏠 Home</div>
+
+
+
+    <div class="topbar">
+      <h2>Orders</h2>
+      <button class="secondary" id="logoutBtn">Logout</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>Date</th>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Amount</th>
+            <th>Color / Size</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="ordersBody"></tbody>
+      </table>
+    </div>
+    
+  </div>
+
+  <script type="module">
+    /* ================= FIREBASE ================= */
+    import { initializeApp } from
+      "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut,
+      setPersistence,
+      browserSessionPersistence
+    } from
+      "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    import {
+      getFirestore,
+      collectionGroup,
+      getDocs,
+      doc,
+      getDoc,
+      updateDoc,
+      serverTimestamp
+    } from
+      "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    /* 🔥 FIREBASE CONFIG */
+    const firebaseConfig = {
+      apiKey: "AIzaSyA-7Vh42USod2GdIzXEsDqKxQfeUHwFFDI",
+      authDomain: "ecom-81a47.firebaseapp.com",
+      projectId: "ecom-81a47",
+      storageBucket: "ecom-81a47.firebasestorage.app",
+      messagingSenderId: "929836126716",
+      appId: "1:929836126716:web:bd75e4b61a1336d2166279",
+      measurementId: "G-QLBXSS3Z9K"
+    };
+
+    /* ================= INIT ================= */
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    /* 🔐 SESSION ONLY (reload / tab close = logout) */
+    await setPersistence(auth, browserSessionPersistence);
+
+    /* ================= LOGIN ================= */
+    loginBtn.onclick = async () => {
+      loginMsg.innerText = "";
+      try {
+        await signInWithEmailAndPassword(
+          auth,
+          email.value,
+          password.value
+        );
+      } catch (e) {
+        loginMsg.innerText = e.message;
+      }
+    };
+
+    logoutBtn.onclick = async () => {
+      await signOut(auth);
+    };
+
+    /* ================= ADMIN CHECK ================= */
+    async function isAdmin(uid) {
+      const s = await getDoc(doc(db, "admins", uid));
+      return s.exists();
+    }
+
+    /* ================= AUTH GUARD ================= */
+    onAuthStateChanged(auth, async user => {
+      if (!user) {
+        loginBox.style.display = "block";
+        adminBox.style.display = "none";
+        return;
+      }
+
+      const ok = await isAdmin(user.uid);
+      if (!ok) {
+        alert("Access denied (Admin only)");
+        await signOut(auth);
+        return;
+      }
+
+      loginBox.style.display = "none";
+      adminBox.style.display = "block";
+      loadOrders();
+    });
+
+    /* ================= LOAD ORDERS ================= */
+async function loadOrders() {
+  ordersBody.innerHTML = "";
+  const snap = await getDocs(collectionGroup(db, "orders"));
+
+  snap.forEach(d => {
+    const o = d.data();
+    const items = o.items || [];
+    
+    // একাধিক আইটেমের টাইটেল একসাথে দেখানোর জন্য (Table View)
+    const itemsTitle = items.map(it => it.title).join(", ");
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+  <td>
+  <a href="#"
+     class="order-link"
+     data-full-id="${d.id}"
+     style="color:#0a7cff; font-weight:bold;">
+     #${window.innerWidth <= 768 ? d.id.slice(0,5) : d.id}
+  </a>
+</td>
+
+      <td>${o.createdAt?.toDate().toLocaleDateString() || "-"}</td>
+      <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis;">${itemsTitle}</td>
+      <td>${items.length}</td>
+      <td>৳ ${o.totals?.grandTotal || 0}</td>
+      <td>${items[0]?.color || "-"} / ${items[0]?.size || "-"}</td>
+      <td><span class="badge ${o.status || "pending"}">${o.status || "pending"}</span></td>
+      <td class="action">
+        <select>
+          ${["pending", "confirm", "ready", "shipped", "delivered", "cancelled"]
+            .map(s => `<option value="${s}" ${s === o.status ? "selected" : ""}>${s}</option>`)
+            .join("")}
+        </select>
+        <button class="save-btn">Save</button>
+      </td>
+    `;
+
+    // অর্ডারের আইডিতে ক্লিক করলে মডেল ওপেন হবে
+    tr.querySelector(".order-link").onclick = (e) => {
+      e.preventDefault();
+      showOrderModal(o, d.id);
+    };
+
+    const sel = tr.querySelector("select");
+    const btn = tr.querySelector(".save-btn");
+
+    btn.onclick = async () => {
+      btn.disabled = true;
+      const st = sel.value;
+      await updateDoc(d.ref, {
+        status: st,
+        updatedAt: serverTimestamp(),
+        [`${st}At`]: serverTimestamp()
+      });
+      loadOrders();
+    };
+
+    ordersBody.appendChild(tr);
+  });
+}// ৩. মডেল দেখানোর ফাংশন (Address, Items, Subtotal, Delivery Charge & Grand Total)
+function showOrderModal(order, orderId) {
+  const modal = document.getElementById("orderModal");
+  const content = document.getElementById("modalContent");
+  
+  // ডাটাবেস অবজেক্ট থেকে তথ্য নেওয়া
+  const addr = order.address || {};
+  const totals = order.totals || {};
+  
+  // আপনার ডাটাবেস অনুযায়ী ফিল্ডগুলো নেওয়া হয়েছে
+  const subtotal = totals.subtotal || 0; 
+  const deliveryCharge = totals.deliveryCharge || 0; 
+  const grandTotal = totals.grandTotal || 0;
+
+  // অর্ডার করা আইটেমগুলোর লিস্ট তৈরি
+  const itemsListHtml = (order.items || []).map(it => `
+    <div style="padding:10px; border:1px solid #eee; margin-bottom:10px; border-radius:8px;">
+      <b>Item:</b> ${it.title || "-"} <br>
+      <span class="small">Price: ৳${it.price || 0} | Qty: ${it.qty || 1}</span><br>
+      <span class="small">Variant: ${it.color || "-"}/${it.size || "-"}</span>
+    </div>
+  `).join("");
+
+  content.innerHTML = `
+    <div style="margin-bottom:20px;">
+      <p><strong>Order ID:</strong> #${orderId}</p>
+      
+      <h4 style="margin:10px 0 5px; color: #0a7cff;">Customer Info:</h4>
+      <p style="margin:2px 0;">👤 <b>Name:</b> ${addr.name || "-"}</p>
+      <p style="margin:2px 0;">📞 <b>Phone:</b> ${addr.phone || "-"}</p>
+      
+      <h4 style="margin:15px 0 5px; color: #0a7cff;">Shipping Address:</h4>
+      <p style="margin:2px 0;">📍 <b>District:</b> ${addr.district || "-"}</p>
+      <p style="margin:2px 0;">🏙️ <b>Thana:</b> ${addr.thana || "-"}</p>
+      <p style="margin:2px 0;">🏠 <b>Street:</b> ${addr.street || "-"}</p>
+      <p style="margin:2px 0;">🚩 <b>Landmark:</b> ${addr.landmark || "-"}</p>
+    </div>
+    
+    <h4 style="border-top:1px solid #eee; padding-top:10px;">Ordered Items</h4>
+    <div style="max-height: 250px; overflow-y: auto;">
+      ${itemsListHtml}
+    </div>
+    
+    <div style="margin-top:15px; padding:15px; background:#f9f9f9; border-radius:8px; line-height: 1.6; border-left: 4px solid #0a7cff;">
+      <div style="display:flex; justify-content:space-between;">
+        <span>Subtotal:</span> <span>৳${subtotal}</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; color: #e53935; font-weight: bold;">
+        <span>Delivery Charge:</span> <span>+ ৳${deliveryCharge}</span>
+      </div>
+      <hr style="border:0; border-top:1px solid #ddd; margin:10px 0;">
+      <div style="display:flex; justify-content:space-between; font-size:18px; font-weight:bold; color: #0a7cff;">
+        <span>Grand Total:</span> <span>৳${grandTotal}</span>
+      </div>
+    </div>
+  `;
+
+  modal.style.display = "block";
+  
+  // মডেল বন্ধ করার লজিক
+  document.getElementById("closeModal").onclick = () => modal.style.display = "none";
+  
+  // মডেলের বাইরে ক্লিক করলে বন্ধ হবে
+  window.onclick = (event) => {
+    if (event.target == modal) modal.style.display = "none";
+  };
+}</script>
+
+  <script>
+    document.getElementById("homeBtn").addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+  </script>
+
+</body>
+
+</html>

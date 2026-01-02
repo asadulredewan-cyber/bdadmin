@@ -1,0 +1,837 @@
+/* =====================================================
+   ADMIN PANEL — MODERN & RESPONSIVE
+===================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  --primary: #4361ee;
+  --primary-dark: #3a56d4;
+  --secondary: #7209b7;
+  --success: #06d6a0;
+  --danger: #ef476f;
+  --warning: #ffd166;
+  --light: #f8f9fa;
+  --dark: #212529;
+  --gray: #6c757d;
+  --border: #dee2e6;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --transition: all 0.3s ease;
+}
+
+body {
+  background: linear-gradient(135deg, #f5f7ff 0%, #f0f2ff 100%);
+  min-height: 100vh;
+  color: var(--dark);
+  padding: 20px;
+}
+
+/* ================= CONTAINERS ================= */
+.page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+/* ================= TYPOGRAPHY ================= */
+h1, h2, h3, h4 {
+  color: var(--dark);
+  margin-bottom: 16px;
+}
+
+h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+h4 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--secondary);
+  margin-top: 20px;
+}
+
+/* ================= TOP BAR ================= */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--border);
+}
+
+.home-btn {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+}
+
+.home-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+}
+
+/* ================= BUTTONS ================= */
+.btn {
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn.blue {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+}
+
+.btn.gray {
+  background: linear-gradient(135deg, #6c757d, #5a6268);
+  color: white;
+}
+
+.btn.red {
+  background: linear-gradient(135deg, var(--danger), #dc3545);
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* ================= ACTIONS BAR ================= */
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+/* ================= FORMS ================= */
+input, select, textarea {
+  width: 100%;
+  padding: 12px 16px;
+  margin: 8px 0;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  transition: var(--transition);
+  background: white;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+}
+
+input[readonly] {
+  background-color: #f8f9fa;
+  color: var(--gray);
+}
+
+/* ================= TABLES ================= */
+.product-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 20px 0;
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.product-table th {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+.product-table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.product-table tr:last-child td {
+  border-bottom: none;
+}
+
+.product-table tr:hover {
+  background-color: rgba(67, 97, 238, 0.05);
+}
+
+.product-table img {
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+}
+
+.product-table button {
+  padding: 6px 12px;
+  margin: 2px;
+  border-radius: 6px;
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.product-table button:first-child {
+  background-color: var(--primary);
+  color: white;
+}
+
+.product-table button:last-child {
+  background-color: var(--danger);
+  color: white;
+}
+
+.product-table button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ================= EDIT BOX ================= */
+.edit-box {
+  background: white;
+  padding: 24px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin: 20px 0;
+}
+
+.edit-box input, .edit-box select {
+  margin-bottom: 16px;
+}
+
+/* ================= GALLERY ================= */
+.gallery-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.gallery-url-input {
+  flex: 1;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+.gallery-item .remove {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: var(--danger);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.gallery-item:hover .remove {
+  opacity: 1;
+}
+
+/* ================= COLOR VARIANTS ================= */
+.colors > div {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  border-left: 4px solid var(--primary);
+}
+
+.sizes {
+  margin: 12px 0;
+  padding: 12px;
+  background: white;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.sizes > div {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 8px;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+/* ================= DETAILS ================= */
+.details-box {
+  margin: 16px 0;
+}
+
+.detail-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  align-items: flex-start;
+}
+
+.detail-row textarea {
+  flex: 1;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.detail-del {
+  background: var(--danger);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ================= DASHBOARD ================= */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.dash-btn {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 24px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: var(--shadow);
+}
+
+.dash-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.dash-btn:nth-child(1) { background: linear-gradient(135deg, #4361ee, #3a56d4); }
+.dash-btn:nth-child(2) { background: linear-gradient(135deg, #7209b7, #560bad); }
+.dash-btn:nth-child(3) { background: linear-gradient(135deg, #06d6a0, #05c490); }
+.dash-btn:nth-child(4) { background: linear-gradient(135deg, #ff9e00, #ff9100); }
+.dash-btn:nth-child(5) { background: linear-gradient(135deg, #ef476f, #e0355d); }
+
+.logout {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  padding: 16px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.logout:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+/* ================= MODAL ================= */
+#imagePickerModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+}
+
+#imagePickerModal > div {
+  background: white;
+  padding: 30px;
+  width: 95%;
+  max-width: 1000px;
+  max-height: 90vh;
+  overflow: auto;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+#imagePickerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.picker-item {
+  border: 3px solid transparent;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition);
+  aspect-ratio: 1;
+}
+
+.picker-item:hover {
+  transform: scale(1.05);
+  border-color: var(--primary);
+}
+
+.picker-item.selected {
+  border-color: var(--success);
+  box-shadow: 0 0 0 3px rgba(6, 214, 160, 0.3);
+}
+
+.picker-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ================= LOADING ================= */
+#productsRoot, #heroRoot {
+  min-height: 200px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  h3 {
+    font-size: 1.2rem;
+  }
+  
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  #imagePickerGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .detail-row {
+    flex-direction: column;
+  }
+  
+  .detail-del {
+    align-self: flex-end;
+  }
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card, .edit-box, .product-table, .dashboard {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* ================= SCROLLBAR ================= */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--primary-dark), #4a0d8c);
+}
+
+/* ================= UTILITY ================= */
+.hr {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border), transparent);
+  margin: 24px 0;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--primary);
+  color: white;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  color: var(--gray);
+}
+
+.loading::after {
+  content: "";
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  margin-left: 12px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+/* style.css এ এটি যোগ করুন যদি না থাকে */
+.gallery-card {
+  position: relative;
+  display: inline-block;
+}
+
+.gallery-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.gallery-remove {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+.picker-item.selected {
+  border-color: var(--success) !important;
+  box-shadow: 0 0 0 4px rgba(6, 214, 160, 0.4);
+  transform: scale(0.95);
+}
+
+/* style.css */
+.picker-item {
+  border: 3px solid transparent; /* ডিফল্ট বর্ডার */
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* যখন ইমেজ সিলেক্ট করা হবে */
+
+/* সিলেক্টেড ইমেজের ওপর একটি টিক মার্ক (ঐচ্ছিক) */
+.picker-item.selected::after {
+  content: "✓";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: #4361ee;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+
+/* ===== IMAGE PICKER HEADER (JS INJECTED) ===== */
+.picker-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #fff;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #eee;
+}
+
+.picker-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.picker-actions {
+  display: flex;
+  gap: 10px;
+}
+
+
+/* ===== GALLERY ACTION BUTTONS ===== */
+.gallery-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.gallery-actions button {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Add URL */
+.gallery-add-url {
+  background: linear-gradient(135deg, var(--success), #05c490);
+  color: white;
+}
+
+.gallery-add-url:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(6, 214, 160, 0.4);
+}
+
+/* Pick Images */
+.gallery-pick {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+}
+
+.gallery-pick:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(67, 97, 238, 0.4);
+}
+/* ===== FORM INLINE ACTION BUTTONS ===== */
+.product-box button:not(.btn):not(.gallery-add-url):not(.gallery-pick) {
+  margin-top: 8px;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  border: 2px dashed var(--border);
+  background: white;
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* hover effect */
+.product-box button:not(.btn):hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   MOBILE CLEAN UI (FINAL)
+===================================================== */
+@media (max-width: 480px) {
+
+  body {
+    padding: 8px;
+  }
+
+  .page {
+    max-width: 100%;
+  }
+
+  .card {
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  /* Headings */
+  h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+
+  h4 {
+    font-size: 0.95rem;
+    margin-top: 16px;
+  }
+
+  /* Inputs compact */
+  input,
+  select,
+  textarea {
+    padding: 8px 10px;
+    font-size: 13px;
+    margin: 6px 0;
+  }
+
+  /* Gallery buttons row */
+  .gallery-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .gallery-actions button {
+    flex: 1;
+    padding: 8px 10px;
+    font-size: 12px;
+    border-radius: 999px;
+  }
+
+  /* Gallery grid smaller */
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .gallery-card img {
+    width: 100%;
+    height: 90px;
+  }
+
+  /* Inline add buttons (+Add Color etc) */
+  .product-box button:not(.btn):not(.gallery-add-url):not(.gallery-pick) {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  /* SAVE PRODUCT button */
+  #saveBtn {
+    width: 100%;
+    padding: 12px;
+    font-size: 13px;
+  }
+}
+/* =====================================================
+   IMAGE PICKER — MOBILE IMAGE SIZE FIX
+===================================================== */
+@media (max-width: 480px) {
+
+  /* Grid tighter */
+  #imagePickerGrid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  /* Remove forced square */
+  .picker-item {
+    aspect-ratio: auto !important;
+    height: 90px !important;
+  }
+
+  /* Image fit nicely */
+  .picker-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* Modal padding reduce */
+  #imagePickerModal > div {
+    padding: 14px !important;
+    max-height: 85vh;
+  }
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta charset="UTF-8">
+    <title>hero Manager</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+    <div class="page">
+        <div class="card">
+
+            <div class="top-bar">
+                <div id="homeBtn" class="home-btn">🏠 Home</div>
+
+                <h2>hero Manager</h2>
+            </div>
+
+            <div class="actions">
+                <button id="loadHeroBtn" class="btn blue">Hero Load</button>
+                <button id="addHeroBtn" class="btn blue">+ Add Hero</button>
+
+                <button id="logoutBtn" class="btn red">Logout</button>
+            </div>
+
+            <hr>
+
+            <div id="heroRoot"></div>
+        </div>
+
+        <!-- IMAGE PICKER MODAL -->
+        <div id="imagePickerModal" style="display:none">
+            <div>
+                <div id="imagePickerGrid"></div>
+            </div>
+        </div>
+
+        <!-- ✅ FIRST: image picker (global) -->
+        <script src="./assets/js/pages/imagepicker.js"></script>
+
+        <!-- ✅ admin logic -->
+        <script type="module" src="./assets/js/core/admin.js"></script>
+
+        <!-- ✅ hero logic -->
+        <script type="module" src="./assets/js/pages/hero.js"></script>
+    </div>
+</body>
+
+</html>
