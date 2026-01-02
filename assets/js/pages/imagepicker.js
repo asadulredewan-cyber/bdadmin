@@ -9,7 +9,7 @@ let SELECTED_IMAGES = new Set();
 /* ===== LOAD JSON ===== */
 async function loadImageLibrary() {
   try {
-    const res = await fetch("/assets/json/cloudinary.json");
+    const res = await fetch("./assets/json/cloudinary.json");
     IMAGE_JSON = await res.json();
     renderImageGrid();
   } catch (err) {
@@ -131,3 +131,4 @@ function renderImageGrid() {
 
   grid.innerHTML = html;
 }
+
