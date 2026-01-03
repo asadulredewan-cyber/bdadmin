@@ -1,9 +1,13 @@
 {
-  "updatedAt": 1767372819550,
+  "updatedAt": 1767412253772,
   "folders": [
     {
       "folder": "root",
       "images": [
+        {
+          "public_id": "1000024406-removebg-preview_lcwkev",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1767381228/1000024406-removebg-preview_lcwkev.png"
+        },
         {
           "public_id": "608534156_122109954783144882_8678058633658823389_n_vrncoz",
           "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1767346061/608534156_122109954783144882_8678058633658823389_n_vrncoz.jpg"
