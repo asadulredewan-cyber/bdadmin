@@ -11,6 +11,9 @@ import {
 import { db } from "../core/firebase.js";
 
 /* ================= STATE ================= */
+let PAGE_MODE = "idle"; 
+// values: "idle" | "load" | "add"
+
 let CATALOG = { products: [] };
 let actionBar = null;
 
@@ -38,6 +41,8 @@ function calculateDiscount(price, oldPrice) {
 
 /* ================= LOAD PRODUCTS ================= */
 async function loadProducts() {
+  PAGE_MODE = "load";
+
   productsRoot.innerHTML = "Loading products...";
 
   const snap = await getDoc(doc(db, "meta", "catalog"));
@@ -51,6 +56,8 @@ async function loadProducts() {
 
   renderActionButtons();
   renderProductTable(CATALOG.products);
+  DRAFT_PRODUCTS = []; // add drafts clear
+
 }
 
 /* ================= ACTION BUTTONS ================= */
@@ -58,6 +65,7 @@ function renderActionButtons() {
   if (actionBar) return;
 
   actionBar = document.createElement("div");
+  actionBar.className = "product-action-bar";
   actionBar.style.display = "flex";
   actionBar.style.gap = "12px";
   actionBar.style.margin = "15px 0";
