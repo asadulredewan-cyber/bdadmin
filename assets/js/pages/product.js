@@ -27,6 +27,8 @@ const CATEGORY_OPTIONS = [
 
 /* ================= STATE ================= */
 let NEXT_PRODUCT_ID = 1;
+let PAGE_MODE = "idle"; 
+// values: "idle" | "load" | "add"
 
 let CATALOG = { products: [] };
 let DRAFT_PRODUCTS = [];
@@ -100,6 +102,24 @@ function cleanCatalog(cat) {
 
 /* ================= CREATE FORM ================= */
 function createProductForm() {
+  
+
+PAGE_MODE = "add";
+
+  // 🔴 load view clear
+  productsRoot.innerHTML = "";
+
+  // action bar থাকলে hide করুন
+  const actionBar = document.querySelector(".product-action-bar");
+  if (actionBar) actionBar.style.display = "none";
+
+
+
+
+
+
+
+
   const product = {
     id: generateUUID(),
    productId: getNextProductId(),
