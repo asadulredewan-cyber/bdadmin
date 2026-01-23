@@ -10,16 +10,6 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { db } from "../core/firebase.js";
 
-
-import {
-  doc,
-  getDoc,
-  setDoc,
-  serverTimestamp,
-  collection,
-  addDoc
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
 /* ================= DOM ================= */
 const productsRoot = document.getElementById("productsRoot");
 const addProductBtn = document.getElementById("addProductBtn");
@@ -33,34 +23,14 @@ const CATEGORY_OPTIONS = [
   "Other"
 ];
 
-/* ===== CURRENT USER (for history) ===== */
-import { onAuthStateChanged } from
-  "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { auth } from "../core/firebase.js";
 
-let CURRENT_USER = null;
-
-onAuthStateChanged(auth, async user => {
-  if (!user) return;
-
-  const snap = await getDoc(doc(db, "users", user.uid));
-  if (snap.exists()) {
-    CURRENT_USER = {
-      uid: user.uid,
-      ...snap.data()
-    };
-  }
-});
 
 /* ================= STATE ================= */
+let NEXT_PRODUCT_ID = 1;
+
 let CATALOG = { products: [] };
-let CURRENT_PRODUCT = null;
+let DRAFT_PRODUCTS = [];
 let formActionsEl = null;
-
-
-
-
-
 
 
 function generateUUID() {
@@ -80,25 +50,26 @@ function calculateDiscount(price, oldPrice) {
 }
 
 function getNextProductId() {
-  if (!CATALOG.products.length) return 1;
-
-  const ids = CATALOG.products
-    .map(p => Number(p.productId))
-    .filter(n => Number.isFinite(n));
-
-  return ids.length ? Math.max(...ids) + 1 : 1;
+  return NEXT_PRODUCT_ID++;
 }
-
 
 /* ================= LOAD CATALOG ================= */
 async function loadCatalog() {
   const ref = doc(db, "meta", "catalog");
   const snap = await getDoc(ref);
+
   if (snap.exists()) {
     CATALOG = snap.data();
     CATALOG.products ||= [];
+
+    const ids = CATALOG.products
+      .map(p => Number(p.productId))
+      .filter(n => Number.isFinite(n));
+
+    NEXT_PRODUCT_ID = ids.length ? Math.max(...ids) + 1 : 1;
   }
 }
+
 await loadCatalog();
 
 /* ================= CLEANERS ================= */
@@ -144,7 +115,7 @@ function createProductForm() {
     specifications: []
   };
 
-  CURRENT_PRODUCT = product;
+  DRAFT_PRODUCTS.push(product);
 
   const box = document.createElement("div");
   box.className = "product-box";
@@ -449,46 +420,25 @@ renderGallery(galleryGrid, product);
 /* ================= SAVE ================= */
 async function saveProduct() {
   try {
-    if (!CURRENT_PRODUCT) return alert("No product");
-
-    const product = cleanProduct({
-      ...CURRENT_PRODUCT,
-      discount: calculateDiscount(
-        CURRENT_PRODUCT.price,
-        CURRENT_PRODUCT.oldPrice
-      ),
-      meta: {
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-        source: "admin-panel"
-      }
-    });
-
-
-/* ===== ADD PRODUCT HISTORY (CREATE ONLY) ===== */
-if (CURRENT_USER) {
-  await addDoc(
-    collection(db, "product_history"),
-    {
-      productId: product.id,
-      action: "create",
-      editedAt: serverTimestamp(),
-      editedBy: {
-        uid: CURRENT_USER.uid,
-        name: CURRENT_USER.name,
-        role: CURRENT_USER.role
-      },
-      changes: {
-        created: true
-      }
+    if (!DRAFT_PRODUCTS.length) {
+      return alert("No products to save");
     }
-  );
-}
 
-     
-    const index = CATALOG.products.findIndex(p => p.id === product.id);
-    if (index === -1) CATALOG.products.push(product);
-    else CATALOG.products[index] = product;
+    DRAFT_PRODUCTS.forEach(p => {
+      const cleaned = cleanProduct({
+        ...p,
+        discount: calculateDiscount(p.price, p.oldPrice),
+        meta: {
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
+          source: "admin-panel"
+        }
+      });
+
+      const index = CATALOG.products.findIndex(x => x.id === cleaned.id);
+      if (index === -1) CATALOG.products.push(cleaned);
+      else CATALOG.products[index] = cleaned;
+    });
 
     const safeCatalog = cleanCatalog(CATALOG);
 
@@ -504,7 +454,7 @@ if (CURRENT_USER) {
       { merge: true }
     );
 
-    alert("Product saved");
+    alert(`${DRAFT_PRODUCTS.length} products saved`);
     location.reload();
 
   } catch (err) {
@@ -512,6 +462,7 @@ if (CURRENT_USER) {
     alert("Save failed. Check console.");
   }
 }
+
 
 /* ================= ACTION BAR ================= */
 function ensureActions() {
@@ -566,4 +517,3 @@ function renderGallery(grid, product) {
 if (addProductBtn) {
   addProductBtn.onclick = createProductForm;
 }
-
