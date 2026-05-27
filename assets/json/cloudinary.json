@@ -1,9 +1,13 @@
 {
-  "updatedAt": 1779854495191,
+  "updatedAt": 1779906454043,
   "folders": [
     {
       "folder": "root",
       "images": [
+        {
+          "public_id": "db829b37-34d6-40c6-80bc-ea41758e6f7f",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1779891882/db829b37-34d6-40c6-80bc-ea41758e6f7f.png"
+        },
         {
           "public_id": "hhdkvcvene4xdekm4hl1",
           "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1777604677/hhdkvcvene4xdekm4hl1.jpg"
