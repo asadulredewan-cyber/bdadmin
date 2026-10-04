@@ -1,6 +1,19 @@
 {
-  "updatedAt": 1791121601897,
+  "updatedAt": 1791141439813,
   "folders": [
+    {
+      "folder": "nishat-fashion/products",
+      "images": [
+        {
+          "public_id": "qm0lqkct1ftof7qvy8qy",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1791124224/nishat-fashion/products/qm0lqkct1ftof7qvy8qy.png"
+        },
+        {
+          "public_id": "bbbixurx4skxcbmzodwy",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1791122316/nishat-fashion/products/bbbixurx4skxcbmzodwy.png"
+        }
+      ]
+    },
     {
       "folder": "root",
       "images": [
