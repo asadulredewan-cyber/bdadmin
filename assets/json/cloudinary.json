@@ -1,6 +1,35 @@
 {
-  "updatedAt": 1791175055309,
+  "updatedAt": 1791219210197,
   "folders": [
+    {
+      "folder": "root",
+      "images": [
+        {
+          "public_id": "grbwjg9yikjvjvur34sc",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1791208697/grbwjg9yikjvjvur34sc.jpg"
+        },
+        {
+          "public_id": "aci8kbfhnrimesftnuvl",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1791208435/aci8kbfhnrimesftnuvl.jpg"
+        },
+        {
+          "public_id": "q91cn5bj1rbjyzvvpju1",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1791208272/q91cn5bj1rbjyzvvpju1.jpg"
+        },
+        {
+          "public_id": "zkunuchtzmq4jqh0utnf",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1791208105/zkunuchtzmq4jqh0utnf.jpg"
+        },
+        {
+          "public_id": "olkfby1gh3dain3v2fbu",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1790743909/olkfby1gh3dain3v2fbu.png"
+        },
+        {
+          "public_id": "hhdkvcvene4xdekm4hl1",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1777604677/hhdkvcvene4xdekm4hl1.jpg"
+        }
+      ]
+    },
     {
       "folder": "nishat-fashion/products",
       "images": [
@@ -11,19 +40,6 @@
         {
           "public_id": "bbbixurx4skxcbmzodwy",
           "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1791122316/nishat-fashion/products/bbbixurx4skxcbmzodwy.png"
-        }
-      ]
-    },
-    {
-      "folder": "root",
-      "images": [
-        {
-          "public_id": "olkfby1gh3dain3v2fbu",
-          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1790743909/olkfby1gh3dain3v2fbu.png"
-        },
-        {
-          "public_id": "hhdkvcvene4xdekm4hl1",
-          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1777604677/hhdkvcvene4xdekm4hl1.jpg"
         }
       ]
     }
