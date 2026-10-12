@@ -1,4 +1,14 @@
 {
-  "updatedAt": 1791780784715,
-  "folders": []
+  "updatedAt": 1791826150878,
+  "folders": [
+    {
+      "folder": "root",
+      "images": [
+        {
+          "public_id": "ud8scx2qb6kxmgorwdoc",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1791814742/ud8scx2qb6kxmgorwdoc.jpg"
+        }
+      ]
+    }
+  ]
 }
