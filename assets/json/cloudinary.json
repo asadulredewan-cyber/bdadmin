@@ -1,4 +1,22 @@
 {
-  "updatedAt": 1793595363845,
-  "folders": []
+  "updatedAt": 1793642177425,
+  "folders": [
+    {
+      "folder": "6deAOrMU9yB1tqdpJhuL",
+      "images": [
+        {
+          "public_id": "gffxfygplvwx2bbf7obt",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1793598463/nishat/products/6deAOrMU9yB1tqdpJhuL/gffxfygplvwx2bbf7obt.jpg"
+        },
+        {
+          "public_id": "wreim7cjqac7byjw1w9b",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1793598454/nishat/products/6deAOrMU9yB1tqdpJhuL/wreim7cjqac7byjw1w9b.jpg"
+        },
+        {
+          "public_id": "j8jngzgupp4sfnuaerbp",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1793598450/nishat/products/6deAOrMU9yB1tqdpJhuL/j8jngzgupp4sfnuaerbp.jpg"
+        }
+      ]
+    }
+  ]
 }
