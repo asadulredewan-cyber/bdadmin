@@ -1,6 +1,33 @@
 {
-  "updatedAt": 1794291815791,
+  "updatedAt": 1794327058677,
   "folders": [
+    {
+      "folder": "temp_1794313252794_0spbc",
+      "images": [
+        {
+          "public_id": "mbsrwwcgjsfmrezwalfe",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1794313237/nishat/products/temp_1794313252794_0spbc/mbsrwwcgjsfmrezwalfe.png"
+        }
+      ]
+    },
+    {
+      "folder": "temp_1794313250092_615uh",
+      "images": [
+        {
+          "public_id": "n67fhwd9wqlhejnedkyg",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1794313235/nishat/products/temp_1794313250092_615uh/n67fhwd9wqlhejnedkyg.png"
+        }
+      ]
+    },
+    {
+      "folder": "temp_1794313246007_5i0wg",
+      "images": [
+        {
+          "public_id": "ynyievmw86vihcb9cwhc",
+          "url": "https://res.cloudinary.com/dmqnuzexg/image/upload/v1794313232/nishat/products/temp_1794313246007_5i0wg/ynyievmw86vihcb9cwhc.png"
+        }
+      ]
+    },
     {
       "folder": "UJmiAuqOJfQfecMtJEkb",
       "images": [
